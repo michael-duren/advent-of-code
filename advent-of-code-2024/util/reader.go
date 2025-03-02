@@ -23,7 +23,7 @@ func ReadFromFile(filename string) string {
 	return string(content)
 }
 
-func ReadToLines(filename string) []string {
+func ReadFileToLines(filename string) []string {
 	str := ReadFromFile(filename)
 	return strings.Split(str, "\n")
 }

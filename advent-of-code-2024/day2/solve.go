@@ -1,7 +1,92 @@
 package day2
 
-import "github.com/charmbracelet/log"
+import (
+	"advent-of-code-2024/util"
+	"math"
+	"strconv"
+	"strings"
+
+	"github.com/charmbracelet/log"
+)
+
+type matrix struct {
+	levels [][]int
+}
+
+func newMatrix(lines []string) *matrix {
+	m := make([][]int, 0, len(lines))
+	for _, line := range lines {
+		if line == "" {
+			continue
+		}
+		strSplit := strings.Split(line, " ")
+		nums := make([]int, 0, len(strSplit))
+		for _, v := range strSplit {
+			n, err := strconv.Atoi(v)
+			if err != nil {
+				log.Fatalf("error converting ascii to int: %v", err)
+			}
+			nums = append(nums, n)
+		}
+		m = append(m, nums)
+	}
+	return &matrix{levels: m}
+}
+
+func (m *matrix) isLineSafe(i int) bool {
+	line := m.levels[i]
+	if len(line) < 2 {
+		return true
+	}
+
+	desc := line[0] > line[1]
+	asc := !desc
+
+	if math.Abs(float64(line[0]-line[1])) > 3 {
+		return false
+	}
+
+	for i, item := range line {
+		// there is no nextitem
+		if i+1 == len(line) {
+			return true
+		}
+		nextItem := line[i+1]
+		diff := math.Abs(float64(item - nextItem))
+		if diff > 3 {
+			return false
+		}
+		if desc && item < nextItem {
+			return false
+		}
+
+		if asc && item > nextItem {
+			return false
+		}
+
+		if item == nextItem {
+			return false
+		}
+	}
+	return true
+}
+
+func (m *matrix) countSafe() int {
+	var total int
+	for i := range m.levels {
+		safe := m.isLineSafe(i)
+		if safe {
+			total = total + 1
+		}
+	}
+	return total
+}
 
 func Solve() {
-	log.Errorf("solving day 2")
+	log.Info("solving day 2")
+	lines := util.ReadFileToLines("day2/puzzle-input.txt")
+	// lines := util.ReadFileToLines("day2/example-input.txt")
+	m := newMatrix(lines)
+	totalSafe := m.countSafe()
+	log.Infof("Total safe for part one: %d", totalSafe)
 }

@@ -3,6 +3,7 @@ package util
 import (
 	"io"
 	"os"
+	"strings"
 
 	"github.com/charmbracelet/log"
 )
@@ -20,4 +21,9 @@ func ReadFromFile(filename string) string {
 	}
 
 	return string(content)
+}
+
+func ReadToLines(filename string) []string {
+	str := ReadFromFile(filename)
+	return strings.Split(str, "\n")
 }

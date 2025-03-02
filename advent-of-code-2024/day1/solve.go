@@ -104,7 +104,7 @@ func (l *lists) sumByRepatedNumbers() (int, error) {
 }
 
 func SolvePartOne() {
-	log.Info("Running day one part one")
+	log.Info("Running day one")
 	cwd, _ := os.Getwd()
 	log.Infof("Current directory: %s", cwd)
 	puzzleStr := util.ReadFromFile("day1/puzzle-input.txt")

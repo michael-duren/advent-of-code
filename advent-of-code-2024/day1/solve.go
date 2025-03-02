@@ -84,16 +84,39 @@ func (l *lists) sumDistances() (int, error) {
 	return sum, nil
 }
 
+func (l *lists) sumByRepatedNumbers() (int, error) {
+	if len(l.a) != len(l.b) {
+		return 0, fmt.Errorf("lengths of a and b are not the same. length of a: %d length of b: %d", l.a, l.b)
+	}
+
+	sum := 0
+	for _, v := range l.a {
+		repeated := 0
+		for _, vv := range l.b {
+			if vv == v {
+				repeated++
+			}
+		}
+		sum = sum + (repeated * v)
+	}
+
+	return sum, nil
+}
+
 func SolvePartOne() {
 	log.Info("Running day one part one")
 	cwd, _ := os.Getwd()
 	log.Infof("Current directory: %s", cwd)
 	puzzleStr := util.ReadFromFile("day1/puzzle-input.txt")
 	l := newLists(puzzleStr)
-	log.Infof("List is: %v", l)
 	sum, err := l.sumDistances()
 	if err != nil {
 		log.Fatalf("there was an error summing the lists: %v", err)
 	}
+	diffSummed, err := l.sumByRepatedNumbers()
+	if err != nil {
+		log.Fatalf("there was an error summing the diffed lists: %v", err)
+	}
 	log.Infof("successfully summed lists: %d", sum)
+	log.Infof("successfully summed diffed lists: %d", diffSummed)
 }

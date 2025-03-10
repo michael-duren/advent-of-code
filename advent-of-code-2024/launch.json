@@ -1,0 +1,11 @@
+{
+  "configurations": [
+    {
+      "name": "Debug Advent of Code",
+      "type": "go",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.go",
+      "args": ["2"]
+    }
+  ]
+}

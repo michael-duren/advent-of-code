@@ -79,7 +79,7 @@ func (l *lists) sumDistances() (int, error) {
 	}
 	sum := 0
 	for i, v := range l.a {
-		sum = sum + int(math.Abs(float64(v-l.b[i])))
+		sum += int(math.Abs(float64(v - l.b[i])))
 	}
 	return sum, nil
 }

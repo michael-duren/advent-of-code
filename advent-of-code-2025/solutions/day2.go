@@ -73,10 +73,7 @@ func isValidID(id int64) bool {
 }
 
 func isValidIDTwo(id int64) bool {
-	// 1188511885 false
-	// 11 or 22 false
 	idStr := strconv.FormatInt(id, 10)
-	// we want to split and compare essentially dividing by 2, 3, 4, up to the length
 	for split := 1; split <= len(idStr)/2; split++ {
 		splits := []string{}
 
@@ -92,7 +89,6 @@ func isValidIDTwo(id int64) bool {
 				break
 			}
 		}
-		// if all same then the id is invalid
 		if allSame {
 			return false
 		}
